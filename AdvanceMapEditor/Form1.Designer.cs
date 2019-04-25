@@ -42,7 +42,6 @@
             this.location = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.btn_OpenImage = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gr_object = new System.Windows.Forms.GroupBox();
             this.txt_H = new System.Windows.Forms.TextBox();
@@ -73,6 +72,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.worldSpace = new AdvanceMapEditor.ImageBox();
+            this.btn_OpenImage = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -194,33 +194,7 @@
             this.cb_typeObject.FormattingEnabled = true;
             this.cb_typeObject.Items.AddRange(new object[] {
             "GROUND",
-            "ROPE",
-            "WALL",
-            "LEVERAGE",
-            "COLUMN",
-            "BAR",
-            "CAMEL",
-            "GUARDS1",
-            "GUARDS2",
-            "GUARDS3",
-            "CIVILIAN1",
-            "CIVILIAN2",
-            "CIVILIAN3",
-            "CIVILIAN4",
-            "PEDDLER",
-            "APPLEITEM",
-            "TEAPOTITEM",
-            "GENIEITEM",
-            "BALLITEM",
-            "ALADDINITEM",
-            "HEARTITEM",
-            "MONKEYITEM",
-            "JARITEM",
-            "STAIR",
-            "GROUND_DROP",
-            "STICKITEM",
-            "TRAP",
-            "JAFAR"});
+            "SPARTA"});
             this.cb_typeObject.Location = new System.Drawing.Point(42, 160);
             this.cb_typeObject.Name = "cb_typeObject";
             this.cb_typeObject.Size = new System.Drawing.Size(223, 28);
@@ -260,17 +234,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(1214, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
-            // 
-            // btn_OpenImage
-            // 
-            this.btn_OpenImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btn_OpenImage.Location = new System.Drawing.Point(474, 251);
-            this.btn_OpenImage.Name = "btn_OpenImage";
-            this.btn_OpenImage.Size = new System.Drawing.Size(227, 105);
-            this.btn_OpenImage.TabIndex = 3;
-            this.btn_OpenImage.Text = "Open Images";
-            this.btn_OpenImage.UseVisualStyleBackColor = true;
-            this.btn_OpenImage.Click += new System.EventHandler(this.btn_OpenImage_Click);
             // 
             // panel1
             // 
@@ -602,6 +565,17 @@
             this.worldSpace.WidthCell = 0;
             this.worldSpace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.worldSpace_MouseDown);
             this.worldSpace.MouseMove += new System.Windows.Forms.MouseEventHandler(this.worldSpace_MouseMove);
+            // 
+            // btn_OpenImage
+            // 
+            this.btn_OpenImage.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btn_OpenImage.Location = new System.Drawing.Point(474, 251);
+            this.btn_OpenImage.Name = "btn_OpenImage";
+            this.btn_OpenImage.Size = new System.Drawing.Size(227, 105);
+            this.btn_OpenImage.TabIndex = 3;
+            this.btn_OpenImage.Text = "Open Images";
+            this.btn_OpenImage.UseVisualStyleBackColor = true;
+            this.btn_OpenImage.Click += new System.EventHandler(this.btn_OpenImage_Click);
             // 
             // Form1
             // 

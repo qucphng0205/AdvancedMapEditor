@@ -92,8 +92,7 @@ namespace AdvanceMapEditor
             }
         }
 
-        public GameObject()
-        {
+        public GameObject() {
         }
 
         public GameObject(int x, int y, int width, int height, EObjectID id)

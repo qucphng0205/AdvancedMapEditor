@@ -106,7 +106,8 @@ namespace AdvanceMapEditor
                 {
                     this.worldSpace.Image = new Bitmap(dlg.FileName);
                     this._imageBuffer = new Bitmap(dlg.FileName);
-                    this.WORLD_X = this.WORLD_Y = Math.Max(this._imageBuffer.Width, this._imageBuffer.Height);
+                    this.WORLD_X = _imageBuffer.Width;
+                    this.WORLD_Y = _imageBuffer.Height;
                     this.quadtree = new QNode(1, 0, WORLD_Y, WORLD_X, WORLD_Y, 1);
                 }
             }
@@ -134,7 +135,7 @@ namespace AdvanceMapEditor
             if (e.KeyChar != 8 && !Char.IsDigit(e.KeyChar))
                 e.Handled = true;
         }
-
+        //phng: Xác định vị trí con trỏ chuột phù hợp với hình bự
         private void worldSpace_MouseMove(object sender, MouseEventArgs e)
         {
             Point currentMouse = new Point(e.X - this.worldSpace.AutoScrollPosition.X, e.Y - this.worldSpace.AutoScrollPosition.Y);
@@ -142,7 +143,7 @@ namespace AdvanceMapEditor
             this._locationMouse.X = currentMouse.X / this._widthCell;
             this._locationMouse.Y = currentMouse.Y / this._heightCell;
 
-            this.location.Text = "[" + this._locationMouse.X + ", " + this._locationMouse.Y + "]";
+            this.location.Text = "[" + currentMouse.X + ", " + currentMouse.Y + "]";
         }
 
         /// <summary>
@@ -217,30 +218,34 @@ namespace AdvanceMapEditor
                 {
                     //Xác định position
                     _object = new GameObject();
-                    //Lấy toạ độ theo toạ độ world 
+                    //Lấy toạ độ top-left của cục theo toạ độ world bottom right
                     this._object.X = this._locationMouse.X * this._widthCell;
                     this._object.Y = WORLD_Y - this._locationMouse.Y * this._heightCell;
 
+                    //Vẽ thôi không có gì 
                     Rectangle rect = new Rectangle(new Point(this._object.X - 2, WORLD_Y - this._object.Y - 2), new Size(3, 3));
-                    this.DrawDemo(rect, _object.Id);
 
+                    this.DrawDemo(rect, _object.Id);
                 }
                 else
                 {
+                    //Lấy tọa độ như điểm 1
                     Point currentWorld = new Point(this._locationMouse.X * this._widthCell, WORLD_Y - this._locationMouse.Y * this._heightCell);
-
+                    //Tính width và height của khối chọn
                     this._object.Width = currentWorld.X - this._object.X;
                     this._object.Height = this._object.Y - currentWorld.Y;
 
+                    //Nếu width âm thì sửa lại dương và phải thêm width của khối cuối vào
                     if (this._object.Width < 0)
                     {
                         this._object.Width *= -1;
+                        //Thay đổi x nếu bị ngược về right
                         this._object.X -= this._object.Width;
                     }
                     else
                         this._object.Width += this._widthCell;
 
-
+                    //Tương tự như width
                     if (this._object.Height < 0)
                     {
                         this._object.Height *= -1;
@@ -249,19 +254,22 @@ namespace AdvanceMapEditor
                     else
                         this._object.Height += this._heightCell;
 
+                    //display width và height lên 
                     this.txt_W.Text = this._object.Width.ToString();
                     this.txt_H.Text = this._object.Height.ToString();
 
-
-                    this._countClick = 0; ;
-
+                    //Reset lại count click
+                    this._countClick = 0;
+                    //Lấy type xem đã chọn cái gì
                     switch (cb_typeObject.SelectedIndex)
                     {
                         case 0: _object.Id = GameObject.EObjectID.GROUND; break;
                     }
-                    _object.Direct = cb_directStair.SelectedIndex;
+
+                    //Đưa object vào list
                     this._listObject.Add(_object);
 
+                    //Vẽ khung
                     Rectangle rect = new Rectangle(new Point(this._object.X, WORLD_Y - this._object.Y), new Size(this._object.Width, this._object.Height));
                     this.DrawDemo(rect, _object.Id);
                 }
@@ -289,13 +297,6 @@ namespace AdvanceMapEditor
                 Color color;
                 switch (id)
                 {
-                    //case GameObject.EObjectID.GUARDS1: color = Color.Yellow; break;
-                    //case GameObject.EObjectID.GUARDS2: color = Color.Red; break;
-                    //case GameObject.EObjectID.GUARDS3: color = Color.Blue; break;
-                    //case GameObject.EObjectID.CIVILIAN1: color = Color.Green; break;
-                    //case GameObject.EObjectID.CIVILIAN2: color = Color.Gold; break;
-                    //case GameObject.EObjectID.CIVILIAN3: color = Color.Gray; break;
-                    //case GameObject.EObjectID.CIVILIAN4: color = Color.FloralWhite; break;
                     default: color = Color.White; break;
                 }
                 Pen pen = new Pen(color);
@@ -316,26 +317,26 @@ namespace AdvanceMapEditor
                 return null;
             string path = saveFileDialog.FileName;
 
-            if (File.Exists(path))
-                File.WriteAllText(path, string.Empty);
+            if (File.Exists(path)) { }
+                //File.WriteAllText(path, string.Empty);
             else
                 File.Create(path).Dispose();
 
             TextWriter writer = new StreamWriter(path, true);
 
-            //First Line: Number of object, Map width, Map height
-            writer.WriteLine(this._listObject.Count + " " + WORLD_X + " " + WORLD_Y);
+            //So luong static object
+            writer.WriteLine(this._listObject.Count);
 
-            //Write object
+            //Write thong tin object
             int index = 0;
 
             foreach (var item in this._listObject)
             {
-                writer.WriteLine(index++ + " " + this.ParseID(item.Id) + " " + item.X + " " + item.Y + " " + item.Width + " " + item.Height + " " + item.Direct);
+                writer.WriteLine(this.ParseID(item.Id) + " " + item.X + " " + item.Y + " " + item.Width + " " + item.Height);
             }
 
-            //Write quadtree
-            quadtree.writeText(writer);
+            //Write thong tin object trong quadtree (obsolete roi bay h thay bat dung grid)
+            //quadtree.writeText(writer);
             writer.Close();
 
             return path;
@@ -348,12 +349,13 @@ namespace AdvanceMapEditor
         /// <returns></returns>
         int ParseID(GameObject.EObjectID id)
         {
-            switch (id)
-            {
-                case GameObject.EObjectID.GROUND: return 1;
+            return (int)id;
+            //switch (id)
+            //{
+            //    case GameObject.EObjectID.GROUND: return 0;
 
-                default: return 0;
-            }
+            //    default: return 0;
+            //}
         }
 
         private GameObject.EObjectID ParseID(int id)

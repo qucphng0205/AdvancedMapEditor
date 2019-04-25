@@ -76,18 +76,18 @@ namespace AdvanceMapEditor
             if (_image != null)
             {
                 this.callBack();
-                graphics.DrawImage(_image, 0, 0);
+                graphics.DrawImage(_image, 0, 0, _image.Width, _image.Height);
 
                 int max = (this._image.Width >= this._image.Height) ? this._image.Width : this._image.Height;
 
-                int rows = (max % _widthCell == 0) ? max / this._widthCell : max / this._widthCell + 1;//(this._image.Height % this._heightCell == 0) ? this._image.Height / this._heightCell : this._image.Height / this._heightCell + 1;
-                int columns = (max % _heightCell == 0) ? max / this._heightCell : max / this._heightCell + 1;// (this._image.Width % this._widthCell == 0) ? this._image.Width / this._widthCell : this._image.Width / this._widthCell + 1;
+                int rows = (max % _widthCell == 0) ? max / this._widthCell : max / this._widthCell + 1;
+
+                int columns = (max % _heightCell == 0) ? max / this._heightCell : max / this._heightCell + 1;
 
                 for (int r = 0; r < rows; r++)
-                    graphics.DrawLine(Pens.Black, new Point(0, r * this._heightCell), new Point(max, r * this._heightCell));
-
+                    graphics.DrawLine(Pens.HotPink, new Point(0, r * this._heightCell), new Point(max, r * this._heightCell));
                 for (int c = 0; c < columns; c++)
-                    graphics.DrawLine(Pens.Black, new Point(c * this._widthCell, 0), new Point(c * this._widthCell, max));
+                    graphics.DrawLine(Pens.HotPink, new Point(c * this._widthCell, 0), new Point(c * this._widthCell, max));
             }
             base.OnPaint(e);
         }
