@@ -263,7 +263,12 @@ namespace AdvanceMapEditor
                     //Lấy type xem đã chọn cái gì
                     switch (cb_typeObject.SelectedIndex)
                     {
-                        case 0: _object.Id = GameObject.EObjectID.GROUND; break;
+                        case 0:
+                            _object.Id = GameObject.EObjectID.GROUND;
+                            break;
+                        case 1:
+                            _object.Id = GameObject.EObjectID.SPARTA;
+                            break;
                     }
 
                     //Đưa object vào list
@@ -318,7 +323,7 @@ namespace AdvanceMapEditor
             string path = saveFileDialog.FileName;
 
             if (File.Exists(path)) { }
-                //File.WriteAllText(path, string.Empty);
+            //File.WriteAllText(path, string.Empty);
             else
                 File.Create(path).Dispose();
 
@@ -362,7 +367,8 @@ namespace AdvanceMapEditor
         {
             switch (id)
             {
-                case 1: return GameObject.EObjectID.GROUND;
+                case 0: return GameObject.EObjectID.GROUND;
+                case 1: return GameObject.EObjectID.SPARTA;
                 default: return GameObject.EObjectID.NONE;
             }
         }

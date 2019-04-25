@@ -11,6 +11,7 @@ namespace AdvanceMapEditor
         public enum EObjectID
         {
             GROUND,
+            SPARTA,
             NONE
         }
 
