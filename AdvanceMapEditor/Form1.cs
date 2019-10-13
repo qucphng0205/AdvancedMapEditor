@@ -20,7 +20,6 @@ namespace AdvanceMapEditor
         private GameObject _object;
         private List<GameObject> _listObject;
         private int _countClick;
-        private QNode quadtree;
 
         private Point _locationMouse;
         private int _widthCell;
@@ -33,7 +32,7 @@ namespace AdvanceMapEditor
             this._widthCell = int.Parse(this.txt_width.Text);
             this._heightCell = int.Parse(this.txt_height.Text);
             this.cb_typeObject.SelectedIndex = 0;
-            this.cb_directStair.SelectedIndex = 0;
+            this.cb_direction.SelectedIndex = 0;
             this._listObject = new List<GameObject>();
 
         }
@@ -70,13 +69,6 @@ namespace AdvanceMapEditor
             for (int i = 0; i < this._listObject.Count; i++)
                 this._listObject[i].Key = i;
 
-            this.quadtree.Clear();
-            //Đổ tất cả object vào node đầu tiên của quadtree
-            foreach (var item in this._listObject)
-                this.quadtree.ListObject.Add(item);
-
-            this.quadtree.BuildTree();//Xây dụng quadtree
-
             try
             {
                 string path = SaveQuadtree();
@@ -108,7 +100,6 @@ namespace AdvanceMapEditor
                     this._imageBuffer = new Bitmap(dlg.FileName);
                     this.WORLD_X = _imageBuffer.Width;
                     this.WORLD_Y = _imageBuffer.Height;
-                    this.quadtree = new QNode(1, 0, WORLD_Y, WORLD_X, WORLD_Y, 1);
                 }
             }
         }
@@ -171,7 +162,7 @@ namespace AdvanceMapEditor
                     WorldRect rectObject = new WorldRect(obj.X, obj.Y, obj.Width, obj.Height);
                     if (rectObject.Contains(currentObject))
                     {
-                        string direct = (obj.Direct == 0) ? "Left to Right" : "Right to Left";
+                        string direct = (obj.Direct == 0) ? "Left to Right" : (obj.Direct == 1) ?  "Right to Left" : "None";
                         var result = MessageBox.Show("Do you want to delete this Object?"
                             + "\nType:\t" + obj.Id
                             + "\nX:\t" + obj.X + "\t->\t" + obj.X / this._widthCell
@@ -198,11 +189,11 @@ namespace AdvanceMapEditor
                         {
                             listRect.Add(new Rectangle(obj.X, WORLD_Y - obj.Y, obj.Width, obj.Height));
                         }
-                        Pen pen = new Pen(Color.White);
+                        Pen pen = new Pen(Color.Green);
                         pen.Width = 3;
                         graphics.DrawRectangles(pen, listRect.ToArray());
                     }
-                    this.worldSpace.Image = image;// new Bitmap(image);
+                    this.worldSpace.Image = image;
                 }
                 else
                     this.worldSpace.Image = new Bitmap(this._imageBuffer);
@@ -264,12 +255,60 @@ namespace AdvanceMapEditor
                     switch (cb_typeObject.SelectedIndex)
                     {
                         case 0:
-                            _object.Id = GameObject.EObjectID.GROUND;
+                            _object.Id = GameObject.EObjectID.Ground;
                             break;
                         case 1:
-                            _object.Id = GameObject.EObjectID.SPARTA;
+                            _object.Id = GameObject.EObjectID.Sparta;
+                            break;
+                        case 2:
+                            _object.Id = GameObject.EObjectID.Cat;
+                            break;
+                        case 3:
+                            _object.Id = GameObject.EObjectID.Thrower;
+                            break;
+                        case 4:
+                            _object.Id = GameObject.EObjectID.Eagle;
+                            break;
+                        case 5:
+                            _object.Id = GameObject.EObjectID.Soldier;
+                            break;
+                        case 6:
+                            _object.Id = GameObject.EObjectID.SpiritPoints5;
+                            break;
+                        case 7:
+                            _object.Id = GameObject.EObjectID.SpiritPoints10;
+                            break;
+                        case 8:
+                            _object.Id = GameObject.EObjectID.Scores500;
+                            break;
+                        case 9:
+                            _object.Id = GameObject.EObjectID.Scores1000;
+                            break;
+                        case 10:
+                            _object.Id = GameObject.EObjectID.TimeFreeze;
+                            break;
+                        case 11:
+                            _object.Id = GameObject.EObjectID.Health;
+                            break;
+                        case 12:
+                            _object.Id = GameObject.EObjectID.ThrowingStar;
+                            break;
+                        case 13:
+                            _object.Id = GameObject.EObjectID.WindmillStar;
+                            break;
+                        case 14:
+                            _object.Id = GameObject.EObjectID.Flames;
+                            break;
+                        case 15:
+                            _object.Id = GameObject.EObjectID.Gunner;
+                            break;
+                        case 16:
+                            _object.Id = GameObject.EObjectID.Runner;
                             break;
                     }
+
+                    //Lấy direction
+                    _object.Direct = cb_direction.SelectedIndex;
 
                     //Đưa object vào list
                     this._listObject.Add(_object);
@@ -302,7 +341,7 @@ namespace AdvanceMapEditor
                 Color color;
                 switch (id)
                 {
-                    default: color = Color.White; break;
+                    default: color = Color.Green; break;
                 }
                 Pen pen = new Pen(color);
                 pen.Width = 3;
@@ -335,9 +374,17 @@ namespace AdvanceMapEditor
             //Write thong tin object
             int index = 0;
 
+            //int columns = int.Parse(txtColumns.Text);
+            //int rows = int.Parse(txtRows.Text);
+            //float cellWidth = (float)WORLD_X / columns;
+            //float cellHeight = (float)WORLD_Y / rows;
+
             foreach (var item in this._listObject)
             {
-                writer.WriteLine(this.ParseID(item.Id) + " " + item.X + " " + item.Y + " " + item.Width + " " + item.Height);
+                //int gridX = (int)(float)((item.X + item.Width / 2.0) / cellWidth);
+
+                //int gridY = (int)(float)((item.Y - item.Height / 2.0) / cellHeight);
+                writer.WriteLine(this.ParseID(item.Id) + " " + item.X + " " + item.Y + " " + item.Width + " " + item.Height + " " + item.Direct/* + " " + gridX + " " + gridY*/);
             }
 
             //Write thong tin object trong quadtree (obsolete roi bay h thay bat dung grid)
@@ -363,19 +410,18 @@ namespace AdvanceMapEditor
             //}
         }
 
-        private GameObject.EObjectID ParseID(int id)
-        {
-            switch (id)
-            {
-                case 0: return GameObject.EObjectID.GROUND;
-                case 1: return GameObject.EObjectID.SPARTA;
-                default: return GameObject.EObjectID.NONE;
-            }
-        }
+        //private GameObject.EObjectID ParseID(int id)
+        //{
+        //    switch (id)
+        //    {
+        //        case 0: return GameObject.EObjectID.GROUND;
+        //        case 1: return GameObject.EObjectID.SPARTA;
+        //        default: return GameObject.EObjectID.NONE;
+        //    }
+        //}
 
         private void btn_Refresh_Click(object sender, EventArgs e)
         {
-            this.quadtree.Clear();
             this._listObject.Clear();
             this.worldSpace.Image = new Bitmap(this._imageBuffer);
         }
@@ -420,7 +466,7 @@ namespace AdvanceMapEditor
 
         private void cb_typeObject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cb_directStair.Visible = true;
+            cb_direction.Visible = true;
         }
 
         private void worldSpace_KeyPress(object sender, KeyPressEventArgs e)
@@ -434,6 +480,11 @@ namespace AdvanceMapEditor
         private void subMenu_DeleteObject_Click(object sender, EventArgs e)
         {
             this.check_deleteObject.Checked = (this.check_deleteObject.Checked) ? false : true;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

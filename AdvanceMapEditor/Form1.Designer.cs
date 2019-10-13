@@ -35,15 +35,21 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_Excute = new System.Windows.Forms.Button();
-            this.cb_directStair = new System.Windows.Forms.ComboBox();
+            this.cb_direction = new System.Windows.Forms.ComboBox();
             this.btnSaveQuadTree = new System.Windows.Forms.Button();
             this.check_deleteObject = new System.Windows.Forms.CheckBox();
             this.cb_typeObject = new System.Windows.Forms.ComboBox();
             this.location = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.worldSpace = new AdvanceMapEditor.ImageBox();
+            this.btn_OpenImage = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gr_object = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtRows = new System.Windows.Forms.TextBox();
+            this.txtColumns = new System.Windows.Forms.TextBox();
             this.txt_H = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -71,24 +77,22 @@
             this.subMenu_New = new System.Windows.Forms.ToolStripMenuItem();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.worldSpace = new AdvanceMapEditor.ImageBox();
-            this.btn_OpenImage = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.worldSpace.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gr_object.SuspendLayout();
             this.gr_map.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.worldSpace.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_Refresh
             // 
             this.btn_Refresh.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btn_Refresh.Location = new System.Drawing.Point(188, 197);
+            this.btn_Refresh.Location = new System.Drawing.Point(191, 181);
             this.btn_Refresh.Name = "btn_Refresh";
             this.btn_Refresh.Size = new System.Drawing.Size(75, 34);
             this.btn_Refresh.TabIndex = 6;
@@ -143,7 +147,7 @@
             // btn_Excute
             // 
             this.btn_Excute.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btn_Excute.Location = new System.Drawing.Point(66, 197);
+            this.btn_Excute.Location = new System.Drawing.Point(69, 181);
             this.btn_Excute.Name = "btn_Excute";
             this.btn_Excute.Size = new System.Drawing.Size(75, 34);
             this.btn_Excute.TabIndex = 3;
@@ -151,34 +155,34 @@
             this.btn_Excute.UseVisualStyleBackColor = true;
             this.btn_Excute.Click += new System.EventHandler(this.btn_Excute_Click);
             // 
-            // cb_directStair
+            // cb_direction
             // 
-            this.cb_directStair.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cb_directStair.FormattingEnabled = true;
-            this.cb_directStair.Items.AddRange(new object[] {
+            this.cb_direction.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cb_direction.FormattingEnabled = true;
+            this.cb_direction.Items.AddRange(new object[] {
             "Left to Right ->",
-            "Right to Left <-"});
-            this.cb_directStair.Location = new System.Drawing.Point(42, 194);
-            this.cb_directStair.Name = "cb_directStair";
-            this.cb_directStair.Size = new System.Drawing.Size(219, 24);
-            this.cb_directStair.TabIndex = 8;
-            this.cb_directStair.Visible = false;
+            "Right to Left <-",
+            "None"});
+            this.cb_direction.Location = new System.Drawing.Point(42, 272);
+            this.cb_direction.Name = "cb_direction";
+            this.cb_direction.Size = new System.Drawing.Size(219, 24);
+            this.cb_direction.TabIndex = 8;
             // 
             // btnSaveQuadTree
             // 
             this.btnSaveQuadTree.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnSaveQuadTree.Location = new System.Drawing.Point(92, 251);
+            this.btnSaveQuadTree.Location = new System.Drawing.Point(102, 334);
             this.btnSaveQuadTree.Name = "btnSaveQuadTree";
             this.btnSaveQuadTree.Size = new System.Drawing.Size(144, 34);
             this.btnSaveQuadTree.TabIndex = 7;
-            this.btnSaveQuadTree.Text = "Save QuadTree";
+            this.btnSaveQuadTree.Text = "Save";
             this.btnSaveQuadTree.UseVisualStyleBackColor = true;
             this.btnSaveQuadTree.Click += new System.EventHandler(this.btnSaveQuadTree_Click);
             // 
             // check_deleteObject
             // 
             this.check_deleteObject.AutoSize = true;
-            this.check_deleteObject.Location = new System.Drawing.Point(42, 224);
+            this.check_deleteObject.Location = new System.Drawing.Point(42, 302);
             this.check_deleteObject.Name = "check_deleteObject";
             this.check_deleteObject.Size = new System.Drawing.Size(116, 21);
             this.check_deleteObject.TabIndex = 6;
@@ -194,8 +198,27 @@
             this.cb_typeObject.FormattingEnabled = true;
             this.cb_typeObject.Items.AddRange(new object[] {
             "GROUND",
-            "SPARTA"});
-            this.cb_typeObject.Location = new System.Drawing.Point(42, 160);
+            "SPARTA",
+            "CAT",
+            "THROWER",
+            "EAGLE",
+            "SOLDIER",
+            "SPIRITPOINTS5",
+            "SPIRITPOINTS10",
+            "SCORES500",
+            "SCORES1000",
+            "TIMEFREEZE",
+            "HEALTH",
+            "THROWINGSTAR",
+            "WINDMILLSTAR",
+            "FLAMES",
+            "GUNNER",
+            "RUNNER",
+            "LADDER",
+            "THINSURFACE",
+            "BASAQUER",
+            "BAT"});
+            this.cb_typeObject.Location = new System.Drawing.Point(42, 238);
             this.cb_typeObject.Name = "cb_typeObject";
             this.cb_typeObject.Size = new System.Drawing.Size(223, 28);
             this.cb_typeObject.TabIndex = 5;
@@ -224,6 +247,31 @@
             this.splitContainer1.SplitterDistance = 1214;
             this.splitContainer1.TabIndex = 7;
             // 
+            // worldSpace
+            // 
+            this.worldSpace.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.worldSpace.Controls.Add(this.btn_OpenImage);
+            this.worldSpace.HeightCell = 0;
+            this.worldSpace.Image = null;
+            this.worldSpace.Location = new System.Drawing.Point(3, 3);
+            this.worldSpace.Name = "worldSpace";
+            this.worldSpace.Size = new System.Drawing.Size(1208, 650);
+            this.worldSpace.TabIndex = 5;
+            this.worldSpace.WidthCell = 0;
+            this.worldSpace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.worldSpace_MouseDown);
+            this.worldSpace.MouseMove += new System.Windows.Forms.MouseEventHandler(this.worldSpace_MouseMove);
+            // 
+            // btn_OpenImage
+            // 
+            this.btn_OpenImage.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btn_OpenImage.Location = new System.Drawing.Point(474, 251);
+            this.btn_OpenImage.Name = "btn_OpenImage";
+            this.btn_OpenImage.Size = new System.Drawing.Size(227, 105);
+            this.btn_OpenImage.TabIndex = 3;
+            this.btn_OpenImage.Text = "Open Images";
+            this.btn_OpenImage.UseVisualStyleBackColor = true;
+            this.btn_OpenImage.Click += new System.EventHandler(this.btn_OpenImage_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -251,7 +299,11 @@
             this.gr_object.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gr_object.Controls.Add(this.cb_directStair);
+            this.gr_object.Controls.Add(this.label15);
+            this.gr_object.Controls.Add(this.label14);
+            this.gr_object.Controls.Add(this.txtRows);
+            this.gr_object.Controls.Add(this.txtColumns);
+            this.gr_object.Controls.Add(this.cb_direction);
             this.gr_object.Controls.Add(this.btnSaveQuadTree);
             this.gr_object.Controls.Add(this.check_deleteObject);
             this.gr_object.Controls.Add(this.cb_typeObject);
@@ -267,12 +319,45 @@
             this.gr_object.Controls.Add(this.label7);
             this.gr_object.Controls.Add(this.txt_X);
             this.gr_object.Controls.Add(this.label6);
-            this.gr_object.Location = new System.Drawing.Point(15, 271);
+            this.gr_object.Location = new System.Drawing.Point(15, 258);
             this.gr_object.Name = "gr_object";
-            this.gr_object.Size = new System.Drawing.Size(328, 394);
+            this.gr_object.Size = new System.Drawing.Size(328, 407);
             this.gr_object.TabIndex = 2;
             this.gr_object.TabStop = false;
             this.gr_object.Text = "Object";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(9, 201);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(68, 17);
+            this.label15.TabIndex = 12;
+            this.label15.Text = "Grid rows";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(9, 173);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(91, 17);
+            this.label14.TabIndex = 11;
+            this.label14.Text = "Grid columns";
+            // 
+            // txtRows
+            // 
+            this.txtRows.Location = new System.Drawing.Point(106, 198);
+            this.txtRows.Name = "txtRows";
+            this.txtRows.Size = new System.Drawing.Size(118, 22);
+            this.txtRows.TabIndex = 10;
+            this.txtRows.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            // 
+            // txtColumns
+            // 
+            this.txtColumns.Location = new System.Drawing.Point(106, 170);
+            this.txtColumns.Name = "txtColumns";
+            this.txtColumns.Size = new System.Drawing.Size(118, 22);
+            this.txtColumns.TabIndex = 9;
             // 
             // txt_H
             // 
@@ -416,7 +501,7 @@
             this.gr_map.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gr_map.Location = new System.Drawing.Point(15, 28);
             this.gr_map.Name = "gr_map";
-            this.gr_map.Size = new System.Drawing.Size(328, 237);
+            this.gr_map.Size = new System.Drawing.Size(328, 223);
             this.gr_map.TabIndex = 0;
             this.gr_map.TabStop = false;
             this.gr_map.Text = "Map";
@@ -552,31 +637,6 @@
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // worldSpace
-            // 
-            this.worldSpace.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.worldSpace.Controls.Add(this.btn_OpenImage);
-            this.worldSpace.HeightCell = 0;
-            this.worldSpace.Image = null;
-            this.worldSpace.Location = new System.Drawing.Point(3, 3);
-            this.worldSpace.Name = "worldSpace";
-            this.worldSpace.Size = new System.Drawing.Size(1208, 650);
-            this.worldSpace.TabIndex = 5;
-            this.worldSpace.WidthCell = 0;
-            this.worldSpace.MouseDown += new System.Windows.Forms.MouseEventHandler(this.worldSpace_MouseDown);
-            this.worldSpace.MouseMove += new System.Windows.Forms.MouseEventHandler(this.worldSpace_MouseMove);
-            // 
-            // btn_OpenImage
-            // 
-            this.btn_OpenImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btn_OpenImage.Location = new System.Drawing.Point(474, 251);
-            this.btn_OpenImage.Name = "btn_OpenImage";
-            this.btn_OpenImage.Size = new System.Drawing.Size(227, 105);
-            this.btn_OpenImage.TabIndex = 3;
-            this.btn_OpenImage.Text = "Open Images";
-            this.btn_OpenImage.UseVisualStyleBackColor = true;
-            this.btn_OpenImage.Click += new System.EventHandler(this.btn_OpenImage_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -593,6 +653,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.worldSpace.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -602,7 +663,6 @@
             this.gr_map.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.worldSpace.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -616,7 +676,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_Excute;
-        private System.Windows.Forms.ComboBox cb_directStair;
+        private System.Windows.Forms.ComboBox cb_direction;
         private System.Windows.Forms.Button btnSaveQuadTree;
         private System.Windows.Forms.CheckBox check_deleteObject;
         private System.Windows.Forms.ComboBox cb_typeObject;
@@ -654,6 +714,10 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private ImageBox worldSpace;
+        private System.Windows.Forms.TextBox txtRows;
+        private System.Windows.Forms.TextBox txtColumns;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
     }
 }
 

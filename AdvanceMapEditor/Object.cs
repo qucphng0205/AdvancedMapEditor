@@ -10,8 +10,27 @@ namespace AdvanceMapEditor
     {
         public enum EObjectID
         {
-            GROUND,
-            SPARTA,
+            Ground,
+            Sparta,
+            Cat,
+            Thrower,
+            Eagle,
+            Soldier,
+            SpiritPoints5,
+            SpiritPoints10,
+            Scores500,
+            Scores1000,
+            TimeFreeze,
+            Health,
+            ThrowingStar,
+            WindmillStar,
+            Flames,
+            Gunner,
+            Runner,
+            Ladder,
+            ThinSurface,
+            Basaquer,
+            Bat,
             NONE
         }
 
@@ -20,7 +39,7 @@ namespace AdvanceMapEditor
         private int _x;
         private int _y;
         private EObjectID _id;
-        private int _direct;//0-> left to right; 1-> right to left
+        private int _direct;//0-> left to right; 1-> right to left, 2.left, 3. right, 4->none
         private int _key;
 
         public int Width {
