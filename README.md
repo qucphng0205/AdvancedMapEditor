@@ -1,0 +1,1 @@
+# AdvancedMapEditor for directX Game
